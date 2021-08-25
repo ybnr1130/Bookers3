@@ -7,5 +7,6 @@ Rails.application.routes.draw do
   resources :books, except: [:new] do
     resources :book_comments, only: [:create, :destroy]
   end
+  # View作成から
 
 end
