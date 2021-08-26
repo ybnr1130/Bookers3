@@ -22,7 +22,6 @@
       <h2>Books</h2>
       <%#= render 'books/index', books: @books %>
             
-      <!--ここからコメントカウント-->
       <table class='table table-hover table-inverse'>
         <thead>
           <tr>
@@ -41,17 +40,33 @@
               </td>
               <td><%= link_to book.title, book_path(book), class: "book_#{book.id}" %></td>
               <td><%= book.body %></td>
-              <td></td>
+              <!--ここからいいね機能-->
               <td>
-                <p>コメント数： <%= @book.book_comments.count %></p>
+                <% if book.favorited_by?(current_user) %>
+                  <p>
+                    <%= link_to book_favorites_path(book), method: :delete do %>
+                      ♥<%= book.favorites.count %>
+                    <% end %>
+                  </p>
+                <% else %>
+                  <p>
+                    <%= link_to book_favorites_path(book), method: :post do %>
+                      ♡<%= book.favorites.count %>
+                    <% end %>
+                  </p>
+                <% end %>
               </td>
+              <!--ここまでいいね機能-->
+              <!--ここからコメントカウント-->
+              <td>
+                <p>コメント数： <%= book.book_comments.count %></p>
+              </td>
+              <!--ここまでコメントカウント-->
               <td></td>
             </tr>
           <% end %>
         </tbody>
       </table>
-    <!--ここまでコメントカウント-->
-    
     </div>
   </div>
 </div>
